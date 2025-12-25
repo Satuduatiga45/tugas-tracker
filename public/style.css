@@ -64,7 +64,7 @@ h1 {
     flex-direction: column;
 }
 
-span#details {
+span.details {
     font-size: 10px;
     text-decoration:underline;
     color: blue;

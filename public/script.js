@@ -1,17 +1,20 @@
 // add data button - index.html
 const addDataButton = document.getElementById("add")
-addDataButton.addEventListener("click", () => window.location.href = "new-tugas.html")
+addDataButton?.addEventListener("click", () => window.location.href = "new-tugas.html")
 
 // edit data button - index.html
-const editDataButton = document.getElementById("edit")
-editDataButton.addEventListener("click", () => window.location.href = "edit-tugas.html")
+let editDataButton = document.querySelectorAll("button.edit")
+editDataButton.forEach(e => {
+    e.addEventListener("click", () => window.location.href = "edit-tugas.html")
+})
+
 
 
 // koneksi API
 const API_URL = 'http://localhost:8080/api/tugas'
 const listTugas = document.getElementById("list-tugas")
-const formNewTugas = document.getElementById("form-new-tugas")
 
+// REST API GET
 async function getTugas() {
     try {
         
@@ -31,30 +34,30 @@ function renderTugas(tugas) {
     let html = ""
     tugas.forEach(e => {
         const pinSymbol = (e.pin) ? "&#9733;" : "&#9734";
-        const template = `<div class="item">
+        const template = `<div class="item" data-id="${e.id}">
         <div class="text" id="date">
         <span id="tanggal">${dateFormat(e.date)}</span>
         <span id="waktu">${e.time}</span>
         </div>
         <div class="text" id="task">
-        <span id="judul">${e.tugas}</span><span id="details">See details</span>
+        <span id="judul">${e.tugas}</span><span class="details">See details</span>
         </div>
         <div class="text">
         <span id="pin">${pinSymbol}</span> <!-- &#9733; filed star -->
         </div>
-        <button class="btn" id="done">
+        <button class="btn done">
         DONE
         </button>
-        <button class="btn" id="edit">
+        <button class="btn edit">
         EDIT
         </button>
-        <button class="btn" id="delete">
+        <button class="btn delete">
         DELETE
         </button>
         </div>`
         html += template
+        console.log(tugas)
     });
-    console.log(html)
     listTugas.innerHTML = html;
 }
 
@@ -66,13 +69,6 @@ function dateFormat(date) {
     return `${d.getDate()} ${month} ${d.getFullYear()}`
     
 }
-
-async function postTugas() {
-    try {
-        const 
-    }
-}
-
 
 document.addEventListener("DOMContentLoaded", getTugas)
 

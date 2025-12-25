@@ -12,7 +12,7 @@
             <h1>ADD TUGAS</h1>
         </div>
         <div class="form">
-            <form id="form-new-tugas">
+            <form id="form-new-tugas" action="/views/index.html">
                 <input type="text" placeholder="Tugas" name="tugas" id="tugas" required>
                 <textarea name="description" id="description" placeholder="Description"></textarea>
                 <div class="due">
@@ -20,12 +20,12 @@
                     <input type="time" name="time" id="due-time" required>
                 </div>
                 <div class="button">
-                    <button type="button" onclick="window.location.href = 'index.html'">Cancel</button>
-                    <input type="submit" value="Save">
+                    <button type="button" id="cancel">Cancel</button>
+                    <button type="submit" form="form-new-tugas">Save</button>
                 </div>
             </form>
         </div>
     </div>
-    <script src="../public/script.js"></script>
+    <script type="module" src="../public/newTugas.js"></script>
 </body>
 </html>

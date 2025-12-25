@@ -14,7 +14,6 @@ let currentID = 0;
 // read
 app.get("/api/tugas", (req,res) => {
     res.json(database)
-    console.log(currentID)
 });
 
 // create
