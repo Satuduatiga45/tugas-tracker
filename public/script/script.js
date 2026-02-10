@@ -1,15 +1,3 @@
-// add data button - index.html
-const addDataButton = document.getElementById("add")
-addDataButton?.addEventListener("click", () => window.location.href = "new-tugas.html")
-
-// edit data button - index.html
-let editDataButton = document.querySelectorAll("button.edit")
-editDataButton.forEach(e => {
-    e.addEventListener("click", () => window.location.href = "edit-tugas.html")
-})
-
-
-
 // koneksi API
 const API_URL = 'http://localhost:8080/api/tugas'
 const listTugas = document.getElementById("list-tugas")
@@ -33,7 +21,7 @@ async function getTugas() {
 function renderTugas(tugas) {
     let html = ""
     tugas.forEach(e => {
-        const pinSymbol = (e.pin) ? "&#9733;" : "&#9734";
+        const pinSymbol = (e.is_pinned) ? "&#9733;" : "&#9734";
         const template = `<div class="item" data-id="${e.id}">
         <div class="text" id="date">
         <span id="tanggal">${dateFormat(e.date)}</span>
@@ -70,5 +58,10 @@ function dateFormat(date) {
     
 }
 
-document.addEventListener("DOMContentLoaded", getTugas)
+function timeFormat(time) {
+
+}
+
+
+
 
