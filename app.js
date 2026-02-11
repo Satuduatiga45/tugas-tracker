@@ -25,8 +25,10 @@ db.connect((err) => {
 })
 
 // read
+const queryGetTugas = "SELECT id, tugas, description, DATE_FORMAT(date, '%e %b %Y') AS date, DATE_FORMAT(time, '%H:%i') AS time, is_pinned, is_completed FROM tugas_table"
+
 app.get("/api/tugas", (req,res) => {
-    db.query("SELECT id, tugas, description, date, DATE_FORMAT(time, '%H:%i') AS time, is_pinned, is_completed FROM tugas_table", (err, result, fields) => {
+    db.query(queryGetTugas, (err, result, fields) => {
         if (err) {
             return res.status(500).json({message: "tidak berhasil mengambil data dari database"})
         } 
