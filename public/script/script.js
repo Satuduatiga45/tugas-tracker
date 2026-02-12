@@ -77,7 +77,6 @@ async function updateTugas(id, tugas, description, date, time) {
         date: date,
         time: time
     }
-    console.log(`${API_URL}/${id}`)
 
     try {
         const response = await fetch(`${API_URL}/${id}`, {
@@ -96,6 +95,21 @@ async function updateTugas(id, tugas, description, date, time) {
 
     // kembali ke dashboard
     window.location.href = "index.html"
+}
+
+// toggle is_pinned
+async function toggleIsPinned(id) {
+    console.log(`${API_URL}/pin/${id}`)
+    try {
+        const response = await fetch(`${API_URL}/pin/${id}`, {
+            method: "PUT",
+        })
+        if (!response.ok) {
+            throw new Error(`Error status = ${response.status}`)
+        }
+    } catch (err) {
+        console.log(err)
+    }
 }
 
 

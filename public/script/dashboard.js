@@ -1,3 +1,6 @@
+const FILLED_STAR = "&#9733;"
+const STAR = "&#9734;"
+
 
 // add data button
 const addDataButton = document.getElementById("add")
@@ -12,7 +15,7 @@ function renderTugas() {
 
         let html = ""
         tugas.forEach(e => {
-            const pinSymbol = (e.is_pinned) ? "&#9733;" : "&#9734";
+            const pinSymbol = (e.is_pinned === 1) ? FILLED_STAR : STAR
             const template = `<div class="item" data-id="${e.id}">
             <div class="text" id="date">
             <span id="tanggal">${e.date}</span>
@@ -54,5 +57,10 @@ document.addEventListener('click', e => {
     if (e.target.classList.contains('edit')) {
         // href ke halaman edit tugas dengan url params sesuai dengan id data
         window.location.href = `edit-tugas.html?id=${e.target.parentElement.dataset.id}`
+    }
+
+    // toggle pin
+    if (e.target.id == "pin") {
+        toggleIsPinned(e.target.parentElement.parentElement.dataset.id).then(() => renderTugas())
     }
 })

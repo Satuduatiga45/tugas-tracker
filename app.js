@@ -25,7 +25,7 @@ db.connect((err) => {
 })
 
 // read
-const queryGet = "SELECT id, tugas, description, DATE_FORMAT(date, '%e %b %Y') AS date, DATE_FORMAT(time, '%H:%i') AS time, is_pinned, is_completed FROM tugas_table"
+const queryGet = "SELECT id, tugas, description, DATE_FORMAT(date, '%e %b %Y') AS date, DATE_FORMAT(time, '%H:%i') AS time, is_pinned, is_completed FROM tugas_table ORDER BY CASE WHEN is_pinned THEN 1 ELSE 2 END ASC"
 
 app.get("/api/tugas", (req,res) => {
     db.query(queryGet, (err, result, fields) => {
@@ -45,7 +45,7 @@ app.post("/api/tugas", (req,res) => {
         if (err) {
             return res.status(400).json({message: "gagal menyimpan data"})
         }
-        res.status(201).json({message: "berhasil menyimpan data", data: req.body})
+        res.status(201).json({message: "berhasil menyimpan data", data: result})
 
     }})
 })
@@ -73,7 +73,20 @@ app.put('/api/tugas/:id', (req, res) => {
         if (err) {
             return res.status(400).json({message: "gagal menyimpan data"})
         }
-        res.status(200).json({message: "berhasil menyimpan data", data: req.body})
+        res.status(200).json({message: "berhasil menyimpan data", data: result})
+
+    }})
+})
+
+// toggle is_pinned
+const queryToggleIsPinned = "UPDATE tugas_table SET is_pinned = NOT is_pinned WHERE id = ?"
+app.put("/api/tugas/pin/:id", (req, res) => {
+    const idTugas = req.params.id
+    db.query(queryToggleIsPinned,[idTugas], (err, result) => {{
+        if (err) {
+            return res.status(400).json({message: "gagal menyimpan data"})
+        }
+        res.status(200).json({message: "berhasil menyimpan data", data: result})
 
     }})
 })
