@@ -10,21 +10,26 @@ async function getTugas() {
             throw new Error(`error status: ${response.status}`)
         }
         const tugas = await response.json()
-        renderTugas(tugas)
+        return tugas
 
     } catch (error) {
         console.error(error)
     }
 }
 
+async function getTugasByID(id) { 
+    const data = await getTugas()
+    return data.find(e => e.id == id)
+}
+
 // POST
-async function postTugas() {
+async function postTugas(tugas, description, time, date) {
     // data dari form
-    let payload = {
-        tugas: document.getElementById("tugas").value,
-        description: document.getElementById("description").value,
-        date: document.getElementById("due-date").value,
-        time: document.getElementById("due-time").value
+    const payload = {
+        tugas: tugas,
+        description: description,
+        date: date,
+        time: time
     }
 
     try {
@@ -62,6 +67,35 @@ async function deleteTugas(id) {
     } catch (err) {
         console.log(err)
     }
+}
+
+// UPDATE 
+async function updateTugas(id, tugas, description, date, time) {
+    const payload = {
+        tugas: tugas,
+        description: description,
+        date: date,
+        time: time
+    }
+    console.log(`${API_URL}/${id}`)
+
+    try {
+        const response = await fetch(`${API_URL}/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        })
+        if (!response.ok) {
+            throw new Error(`Error status: ${response.status}`)
+        }
+    } catch (error) {
+        console.log(error)
+    }
+
+    // kembali ke dashboard
+    window.location.href = "index.html"
 }
 
 

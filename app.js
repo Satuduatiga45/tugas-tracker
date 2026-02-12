@@ -25,10 +25,10 @@ db.connect((err) => {
 })
 
 // read
-const queryGetTugas = "SELECT id, tugas, description, DATE_FORMAT(date, '%e %b %Y') AS date, DATE_FORMAT(time, '%H:%i') AS time, is_pinned, is_completed FROM tugas_table"
+const queryGet = "SELECT id, tugas, description, DATE_FORMAT(date, '%e %b %Y') AS date, DATE_FORMAT(time, '%H:%i') AS time, is_pinned, is_completed FROM tugas_table"
 
 app.get("/api/tugas", (req,res) => {
-    db.query(queryGetTugas, (err, result, fields) => {
+    db.query(queryGet, (err, result, fields) => {
         if (err) {
             return res.status(500).json({message: "tidak berhasil mengambil data dari database"})
         } 
@@ -37,10 +37,11 @@ app.get("/api/tugas", (req,res) => {
 });
 
 // create
+const queryPost = "INSERT INTO tugas_table (tugas, description, date, time) VALUES (?,?,?,?)"
 app.post("/api/tugas", (req,res) => {
     const {tugas, description, date, time} = req.body;
     
-    db.query("INSERT INTO tugas_table (tugas, description, date, time) VALUES (?,?,?,?)",[tugas, description, date, time], (err, result) => {{
+    db.query(queryPost,[tugas, description, date, time], (err, result) => {{
         if (err) {
             return res.status(400).json({message: "gagal menyimpan data"})
         }
@@ -50,9 +51,10 @@ app.post("/api/tugas", (req,res) => {
 })
 
 // delete
+const queryDelete = "DELETE FROM tugas_table WHERE id = ?"
 app.delete("/api/tugas/:id", (req, res) => {
     const idTugas = req.params.id;
-    db.query("DELETE FROM tugas_table WHERE id = ?", [idTugas], (err) => {
+    db.query(queryDelete, [idTugas], (err) => {
         if (err) {
             return res.status(400).json({message: "gagal menghapus data"})
         } 
@@ -62,35 +64,19 @@ app.delete("/api/tugas/:id", (req, res) => {
 
 
 // update
-// toggle status done
-// app.put("/api/tugas/:id", (req, res) => {
-//     const idReq = parseInt(req.params.id);
-//     const databaseIndex = database.findIndex(data => data.id === idReq)
+const queryUpdate = "UPDATE tugas_table SET tugas = ?, description = ?, date = ?, time = ? WHERE id = ?"
+app.put('/api/tugas/:id', (req, res) => {
+    const {tugas, description, date, time} = req.body;
+    const idTugas = req.params.id;
+    
+    db.query(queryUpdate,[tugas, description, date, time, idTugas], (err, result) => {{
+        if (err) {
+            return res.status(400).json({message: "gagal menyimpan data"})
+        }
+        res.status(200).json({message: "berhasil menyimpan data", data: req.body})
 
-//     if (databaseIndex === -1) {
-//         return res.status(404).json({message: "data tidak ditemukan"});
-//     }
-
-//     database[databaseIndex].done = !database[databaseIndex].done;
-
-//     res.json(database[databaseIndex])
-
-// })
-
-// // toggle status pin
-// app.put("/api/tugas/:id", (req, res) => {
-//     const idReq = parseInt(req.params.id);
-//     const databaseIndex = database.findIndex(data => data.id === idReq)
-
-//     if (databaseIndex === -1) {
-//         return res.status(404).json({message: "data tidak ditemukan"});
-//     }
-
-//     database[databaseIndex].pin = !database[databaseIndex].pin
-
-//     res.json(database[databaseIndex])
-
-// })
+    }})
+})
 
 
 
