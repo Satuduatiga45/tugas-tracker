@@ -5,9 +5,9 @@
   "license": "ISC",
   "author": "satuduatiga",
   "type": "commonjs",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "app": "nodemon index",
+    "server": "nodemon server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
