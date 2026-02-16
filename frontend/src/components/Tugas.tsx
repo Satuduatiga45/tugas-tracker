@@ -1,30 +1,41 @@
-function Tugas() {
-    return (
-        
-            <div className="tugas">
-                <div className="text" id="date">
-                    <span id="tanggal">28 Okt 2026</span>
-                    <span id="waktu">10:00</span>
-                </div>
-                <div className="text" id="task">
-                    <span id="judul">Projek Dasar Pemrograman</span><span className="details">See details</span>
-                </div>
-                <div className="text">
-                    <span id="pin">&#9734;</span> 
-                     {/* &#9733; filled star  */}
-                </div>
-                <button className="btn done">
-                    DONE
-                </button>
-                <button className="btn edit">
-                    EDIT
-                </button>
-                <button className="btn delete">
-                    DELETE
-                </button>
-            </div>
-        
-    )
+import { useState } from "react";
+
+interface TugasProps {
+	title: string;
+	description?: string;
+	date: string;
+	time: string;
 }
 
-export default Tugas
+function Tugas(props: TugasProps) {
+	const [status, setStatus] = useState("Overdue");
+
+	return (
+		<div className="tugas">
+			<div className="value">
+				<div className="text" id="due">
+					<span id="date">{props.date}</span>
+					<span id="time">{props.time}</span>
+				</div>
+				<div className="text" id="tugas">
+					<span id="title">{props.title}</span>
+					<span id="status">{status}</span>
+				</div>
+			</div>
+			<div className="action">
+				<div className="text">
+					<span id="pin">&#9734;</span>
+					{/* &#9733; filled star  */}
+				</div>
+				<div className="button">
+					<button className="details">View Details</button>
+					<button className="done">Done</button>
+					<button className="edit">Edit</button>
+					<button className="delete">Delete</button>
+				</div>
+			</div>
+		</div>
+	);
+}
+
+export default Tugas;

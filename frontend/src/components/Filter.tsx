@@ -1,8 +1,13 @@
-function Filter() {
+interface FilterProps {
+    label: string,
+    count: number
+}
+
+function Filter(props: FilterProps) {
     return (
         <div className="filter">
-            <span id="label">IN PROGRESS</span>
-            <span id="count">0</span>
+            <span id="label">{props.label}</span>
+            <span id="count">{props.count}</span>
         </div>
     )
 }

@@ -1,0 +1,130 @@
+/* App*/
+
+.container {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin: auto;
+	justify-content: center;
+}
+
+/* Header */
+
+.header {
+	display: flex;
+	flex-direction: column;
+}
+
+.header h1 {
+	margin: 40px 0 15px;
+}
+
+.header button {
+	align-self: flex-end;
+	margin-right: 30px;
+}
+
+/* Filter */
+.filter-tugas {
+	display: flex;
+	border: 0.1px solid black;
+}
+
+.filter {
+	margin: 10px;
+	padding: 15px;
+	width: 100%;
+	border: 0.1px solid black;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+}
+
+.filter #count {
+	font-size: 30px;
+}
+
+/* Tugas */
+
+.list-tugas {
+	display: inline-flex;
+	flex-direction: column;
+	border: 0.1px solid black;
+	padding-bottom: 10px;
+}
+
+.value {
+	display: flex;
+	flex-direction: row;
+}
+
+.action {
+	display: flex;
+	flex-direction: row;
+}
+
+.tugas {
+	border: 0.1px solid black;
+	text-align: left;
+	margin: 10px 10px 0 10px;
+	display: flex;
+	padding: 5px 15px;
+	justify-content: space-between;
+}
+
+.text {
+	margin: auto 10px;
+}
+
+#tugas {
+	display: flex;
+	flex-direction: column;
+	font-size: 22px;
+	margin-left: 15px;
+}
+
+span#status {
+	font-size: 10px;
+	margin: 7px 0 3px;
+	padding: 3px 10px;
+	border: 0.1px solid black;
+	border-radius: 15px;
+	align-self: flex-start;
+}
+
+#due {
+	margin: 3px 0;
+	border: 1px solid black;
+	display: flex;
+	flex-direction: column;
+	text-align: start;
+	padding: 3px 10px;
+	vertical-align: center;
+}
+
+#date {
+	font-size: 12px;
+	margin: auto auto 0;
+}
+#time {
+	margin: 0 auto auto;
+}
+
+#pin {
+	font-size: 30px;
+	cursor: pointer;
+}
+
+.button {
+	display: flex;
+	flex-direction: row;
+}
+
+.button button {
+	text-align: center;
+	display: inline;
+	padding: 12px;
+	width: 100%;
+	margin: auto 3px;
+	white-space: nowrap;
+}
