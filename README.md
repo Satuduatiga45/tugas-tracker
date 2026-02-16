@@ -1,2 +1,9 @@
-# tugas-tracker
-Tracker tugas dengan menggunakan Rest API (express.js)
+# Tugas Tracker
+
+Website to track your task
+
+# Teknologi
+
+- React
+- Express.js
+- MySQL
