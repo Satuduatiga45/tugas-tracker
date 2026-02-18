@@ -1,16 +1,16 @@
-import FilterTugas from "./components/FilterTugas";
-import Header from "./components/Header";
-import ListTugas from "./components/ListTugas";
-
+import { Routes, Route } from "react-router";
 import "./App.css";
+import Dashboard from "./pages/dashboard";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
 	return (
-		<div className="container">
-			<Header />
-			<FilterTugas />
-			<ListTugas />
-		</div>
+		<>
+			<Routes>
+				<Route path="/" element={<Dashboard />} />
+				<Route path="*" element={<NotFoundPage />} />
+			</Routes>
+		</>
 	);
 }
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface TugasProps {
 	title: string;
@@ -7,8 +7,36 @@ interface TugasProps {
 	time: string;
 }
 
+const useStatus = (date: string, time: string, isCompleted: boolean) => {
+	const [status, setStatus] = useState<string>();
+
+	useEffect(() => {
+		const checkStatus = () => {
+			const isoString = `${date.replace(/:/g, "-")}T${time}:00`;
+			const tugasDateTime = new Date(isoString);
+			const currentDateTime = new Date();
+
+			if (isCompleted) {
+				setStatus("Completed");
+			} else if (currentDateTime > tugasDateTime) {
+				setStatus("Overdue");
+			} else {
+				setStatus("In Progress");
+			}
+		};
+
+		checkStatus();
+
+		const interval = setInterval(checkStatus, 60000); // interval 1 menit
+
+		return () => clearInterval(interval);
+	}, [date, time, isCompleted]);
+
+	return status;
+};
+
 function Tugas(props: TugasProps) {
-	const [status, setStatus] = useState("Overdue");
+	const status = useStatus(props.date, props.time, false);
 
 	return (
 		<div className="tugas">
