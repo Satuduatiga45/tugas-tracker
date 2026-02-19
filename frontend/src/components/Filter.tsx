@@ -6,18 +6,6 @@ interface FilterProps {
 }
 
 function Filter(props: FilterProps) {
-	// const divRef = useRef<HTMLDivElement>(null);
-	// const [filterParams, setFilterParams] = useSearchParams();
-
-	// const handleFilter = () => {
-	// 	const filter = props.label
-	// 		.split(" ")
-	// 		.map((e) => e.toLowerCase())
-	// 		.join("-");
-
-	// 	setFilterParams({ filter: filter });
-	// };
-
 	return (
 		<div
 			className={`filter ${props.active ? "active" : ""}`}

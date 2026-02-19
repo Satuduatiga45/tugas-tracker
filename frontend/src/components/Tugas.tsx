@@ -1,42 +1,26 @@
-import { useEffect, useState } from "react";
+// import { useSearchParams } from "react-router";
+import { useStatus } from "../hooks/useStatus";
+
+import ViewDetails from "./ViewDetails";
 
 interface TugasProps {
+	id: number;
 	title: string;
 	description?: string;
 	date: string;
 	time: string;
+	isCompleted: boolean;
+	viewDetails: boolean;
+	handleViewDetails(): void;
 }
 
-const useStatus = (date: string, time: string, isCompleted: boolean) => {
-	const [status, setStatus] = useState<string>();
-
-	useEffect(() => {
-		const checkStatus = () => {
-			const isoString = `${date.replace(/:/g, "-")}T${time}:00`;
-			const tugasDateTime = new Date(isoString);
-			const currentDateTime = new Date();
-
-			if (isCompleted) {
-				setStatus("Completed");
-			} else if (currentDateTime > tugasDateTime) {
-				setStatus("Overdue");
-			} else {
-				setStatus("In Progress");
-			}
-		};
-
-		checkStatus();
-
-		const interval = setInterval(checkStatus, 60000); // interval 1 menit
-
-		return () => clearInterval(interval);
-	}, [date, time, isCompleted]);
-
-	return status;
-};
-
 function Tugas(props: TugasProps) {
-	const status = useStatus(props.date, props.time, false);
+	const status = useStatus(props.date, props.time, props.isCompleted);
+	// const [, setIdViewDetailsParams] = useSearchParams();
+
+	// const handleViewDetails = () => {
+	// 	setIdViewDetailsParams({ idViewDetails: props.id.toString() });
+	// };
 
 	return (
 		<div className="tugas">
@@ -56,12 +40,25 @@ function Tugas(props: TugasProps) {
 					{/* &#9733; filled star  */}
 				</div>
 				<div className="button">
-					<button className="details">View Details</button>
+					<button
+						className="details"
+						onClick={props.handleViewDetails}
+					>
+						View Details
+					</button>
 					<button className="done">Done</button>
 					<button className="edit">Edit</button>
 					<button className="delete">Delete</button>
 				</div>
 			</div>
+			<ViewDetails
+				title={props.title}
+				description={props.description}
+				date={props.date}
+				time={props.time}
+				status={status}
+				isActive={props.viewDetails}
+			/>
 		</div>
 	);
 }

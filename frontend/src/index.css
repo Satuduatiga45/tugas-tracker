@@ -14,6 +14,7 @@
 }
 
 body {
+	margin: 0;
 	place-items: center;
 	text-align: center;
 	height: 100vh;
@@ -21,7 +22,7 @@ body {
 
 #root {
 	width: 100%;
-	height: 100vh;
+	height: 100%;
 	position: relative;
 }
 
