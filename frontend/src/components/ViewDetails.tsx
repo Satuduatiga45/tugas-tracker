@@ -1,26 +1,20 @@
-import { useRef } from "react";
-import { useSearchParams } from "react-router";
-
 interface ViewDetailsProps {
+	id: number;
 	title: string;
 	description?: string;
 	date: string;
 	time: string;
 	status: string;
-	isActive: boolean;
+	onAction(): void;
 }
 
 function ViewDetails(props: ViewDetailsProps) {
-	const divRef = useRef<HTMLDivElement>(null);
-	const [idViewDetailsParams] = useSearchParams();
-
 	const handleBack = () => {
-		idViewDetailsParams.delete("idViewDetails");
-		divRef.current?.classList.add("hide");
+		props.onAction();
 	};
 
 	return (
-		<div className={props.isActive ? "" : "hide"} ref={divRef}>
+		<>
 			<div className="background-disable"></div>
 			<div className="view-details">
 				<div className="details-header">
@@ -29,7 +23,7 @@ function ViewDetails(props: ViewDetailsProps) {
 						<span id="details-status">{props.status}</span>
 					</div>
 					<p id="details-datetime">
-						Due: {props.date} ({props.time})
+						Due: {props.date} | {props.time}
 					</p>
 				</div>
 				<div className="description">
@@ -41,7 +35,7 @@ function ViewDetails(props: ViewDetailsProps) {
 				</div>
 				<button onClick={handleBack}>Back</button>
 			</div>
-		</div>
+		</>
 	);
 }
 

@@ -1,6 +1,4 @@
-import { useState } from "react";
 import Tugas from "./Tugas";
-import { useSearchParams } from "react-router";
 
 const items = [
 	{
@@ -19,11 +17,11 @@ const items = [
 			'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham. The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham. The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.',
 		date: "28 Okt 2026",
 		time: "20:00",
-		isCompleted: false,
+		isCompleted: true,
 	},
 	{
 		id: 2,
-		title: "Projek WOI",
+		title: "Projek WOI bla bla bla bla",
 		description:
 			'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham. The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham. The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.',
 		date: "28 Okt 2026",
@@ -33,14 +31,6 @@ const items = [
 ];
 
 function ListTugas() {
-	const [activeID, setActiveID] = useState<number>();
-	const [, setIdViewDetailsParams] = useSearchParams();
-
-	const handleViewDetails = (id: number) => {
-		setIdViewDetailsParams({ idViewDetails: id.toString() });
-		setActiveID(id);
-	};
-
 	return (
 		<div className="list-tugas">
 			{items.map(
@@ -53,8 +43,6 @@ function ListTugas() {
 						date={date}
 						time={time}
 						isCompleted={isCompleted}
-						viewDetails={activeID === id}
-						handleViewDetails={() => handleViewDetails(id)}
 					/>
 				),
 			)}

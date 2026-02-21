@@ -1,6 +1,5 @@
-// import { useSearchParams } from "react-router";
+import { useState } from "react";
 import { useStatus } from "../hooks/useStatus";
-
 import ViewDetails from "./ViewDetails";
 
 interface TugasProps {
@@ -10,17 +9,20 @@ interface TugasProps {
 	date: string;
 	time: string;
 	isCompleted: boolean;
-	viewDetails: boolean;
-	handleViewDetails(): void;
 }
 
 function Tugas(props: TugasProps) {
 	const status = useStatus(props.date, props.time, props.isCompleted);
-	// const [, setIdViewDetailsParams] = useSearchParams();
+	const [active, setActive] = useState(false);
 
-	// const handleViewDetails = () => {
-	// 	setIdViewDetailsParams({ idViewDetails: props.id.toString() });
-	// };
+	// jika status completed, btn edit, delete, pin hilang
+	const handleHide = props.isCompleted ? "hide" : "";
+	const handleViewDetails = () => {
+		setActive(!active);
+	};
+	const handleBack = () => {
+		setActive(!active);
+	};
 
 	return (
 		<div className="tugas">
@@ -35,30 +37,31 @@ function Tugas(props: TugasProps) {
 				</div>
 			</div>
 			<div className="action">
-				<div className="text">
+				<div className={`text ${handleHide}`}>
 					<span id="pin">&#9734;</span>
 					{/* &#9733; filled star  */}
 				</div>
 				<div className="button">
-					<button
-						className="details"
-						onClick={props.handleViewDetails}
-					>
+					<button className="details" onClick={handleViewDetails}>
 						View Details
 					</button>
-					<button className="done">Done</button>
-					<button className="edit">Edit</button>
+					<button className={`done ${handleHide}`}>Done</button>
+					<button className={`edits ${handleHide}`}>Edit</button>
 					<button className="delete">Delete</button>
 				</div>
 			</div>
-			<ViewDetails
-				title={props.title}
-				description={props.description}
-				date={props.date}
-				time={props.time}
-				status={status}
-				isActive={props.viewDetails}
-			/>
+			{active && (
+				<ViewDetails
+					id={props.id}
+					title={props.title}
+					description={props.description}
+					date={props.date}
+					time={props.time}
+					status={status}
+					onAction={handleBack}
+					// isActive={props.viewDetails}
+				/>
+			)}
 		</div>
 	);
 }

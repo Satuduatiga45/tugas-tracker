@@ -18,7 +18,7 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
-	overflow: hidden;
+	/* overflow: hidden; */
 }
 
 /* 404 */
@@ -162,7 +162,7 @@ span#status {
 }
 
 .hide {
-	display: none;
+	display: none !important;
 }
 
 /* Details */
@@ -183,6 +183,10 @@ span#status {
 	flex-direction: column;
 }
 
+.details-datetime p {
+	font-size: 15px;
+}
+
 .details-value {
 	display: flex;
 	justify-content: space-between;
@@ -200,6 +204,7 @@ span#details-status {
 	border: 0.1px solid black;
 	border-radius: 15px;
 	align-self: flex-start;
+	white-space: nowrap;
 }
 
 .description {
@@ -209,8 +214,80 @@ span#details-status {
 
 .description p {
 	margin: 0 15px 0 0;
+	font-size: 12px;
 }
 
 .view-details button {
 	margin-top: 25px;
+}
+
+/* InputUser */
+
+.input-user {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: #242424;
+	width: 75vh;
+	border: 1px solid black;
+	border-radius: 8px;
+	padding: 30px;
+	text-align: left;
+	z-index: 999;
+	display: flex;
+	flex-direction: column;
+}
+
+.input-user form {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}
+
+.input-user h1 {
+	text-align: center;
+	font-size: 40px;
+	margin: 20px;
+}
+
+.input-user .input {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+input,
+textarea {
+	font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+	font-size: 15px;
+	border: 1px solid black;
+	border-radius: 8px;
+	padding: 8px;
+}
+
+textarea {
+	resize: none;
+	height: 100px;
+}
+
+.datetime {
+	display: flex;
+	flex-direction: row;
+	gap: 10px;
+}
+
+.datetime input {
+	width: 100%;
+}
+
+.input-user .form-button {
+	display: flex;
+	flex-direction: row;
+	gap: 10px;
+	margin-top: 10px;
+}
+
+.form-button button {
+	width: 100%;
 }
