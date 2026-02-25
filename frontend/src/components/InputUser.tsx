@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useCreateTugas } from "../api/useCreateTugas";
+import { useEditTugas } from "../api/useEditTugas";
 
 interface InputUserProps {
 	header: string;
@@ -56,11 +57,22 @@ function InputUser(props: InputUserProps) {
 		resolver: zodResolver(tugasFormSchema),
 	});
 
-	const { createTugas, error } = useCreateTugas();
+	const { createTugas, createError } = useCreateTugas();
+	const { editTugas, editError } = useEditTugas();
 
 	const handleSubmit = () => {
 		if (props.header === "New Tugas") {
 			createTugas({
+				title: form.getValues("title"),
+				description: form.getValues("description"),
+				date: form.getValues("date"),
+				time: form.getValues("time"),
+			});
+		}
+		if (props.header === "Edit Tugas") {
+			if (!props.id) return;
+			editTugas({
+				id: props.id,
 				title: form.getValues("title"),
 				description: form.getValues("description"),
 				date: form.getValues("date"),
@@ -136,7 +148,8 @@ function InputUser(props: InputUserProps) {
 					</div>
 				</form>
 			</div>
-			{error && alert(error)}
+			{createError && alert(createError)}
+			{editError && alert(editError)}
 		</>
 	);
 }

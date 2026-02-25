@@ -1,6 +1,6 @@
 import Tugas from "./Tugas";
 import { useGetTugas } from "../api/useGetTugas";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface ListTugasProps {
 	refreshKey: number;
@@ -9,12 +9,25 @@ interface ListTugasProps {
 function ListTugas(props: ListTugasProps) {
 	const { data, getTugas, loading, error } = useGetTugas();
 
+	// data refresh ketika ada edit tugas
+	const [refreshAfterEdit, setRefreshAfterEdit] = useState(0);
+	const handleRefreshAfterEdit = () => {
+		setRefreshAfterEdit((prev) => prev + 1);
+	};
+
+	// data refresh ketika ada delete tugas
+	const [refreshAfterDelete, setRefreshAfterDelete] = useState(0);
+	const handleRefreshAfterDelete = () => {
+		setRefreshAfterDelete((prev) => prev + 1);
+	};
+
 	useEffect(() => {
 		getTugas();
-	}, [props.refreshKey]);
+	}, [props.refreshKey, refreshAfterEdit, refreshAfterDelete]);
 
 	return (
 		<div className="list-tugas">
+			{data.length === 0 && <p>Tidak ada tugas.</p>}
 			{!loading &&
 				!error &&
 				data.map(
@@ -27,6 +40,8 @@ function ListTugas(props: ListTugasProps) {
 							date={date}
 							time={time}
 							isCompleted={isCompleted}
+							onTugasEdited={handleRefreshAfterEdit}
+							onTugasDeleted={handleRefreshAfterDelete}
 						/>
 					),
 				)}

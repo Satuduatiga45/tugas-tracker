@@ -1,20 +1,13 @@
 import { axiosInstance } from "../lib/axios";
 import { useState } from "react";
 
-interface TugasPayload {
-	title: string;
-	description: string;
-	date: string;
-	time: string;
-}
-
-export const useCreateTugas = () => {
+export const useDeleteTugas = () => {
 	const [fetchError, setFetchError] = useState<string | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 
-	const createTugas = async (data: TugasPayload) => {
+	const deleteTugas = async (id: number) => {
 		try {
-			await axiosInstance.post("/", data);
+			await axiosInstance.delete(`/${id}`);
 		} catch (err) {
 			setFetchError(err as string);
 		} finally {
@@ -23,8 +16,8 @@ export const useCreateTugas = () => {
 	};
 
 	return {
-		createError: fetchError,
-		createLoading: isLoading,
-		createTugas,
+		deleteError: fetchError,
+		deleteloading: isLoading,
+		deleteTugas,
 	};
 };

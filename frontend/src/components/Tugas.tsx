@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useStatus } from "../hooks/useStatus";
 import ViewDetails from "./ViewDetails";
 import InputUser from "../components/InputUser";
+import { useDeleteTugas } from "../api/useDeleteTugas";
 
 interface TugasProps {
 	id: number;
@@ -10,6 +11,8 @@ interface TugasProps {
 	date: string;
 	time: string;
 	isCompleted: boolean;
+	onTugasEdited(): void;
+	onTugasDeleted(): void;
 }
 
 function Tugas(props: TugasProps) {
@@ -25,6 +28,13 @@ function Tugas(props: TugasProps) {
 	};
 	const handleEdit = () => {
 		setActiveEdit(!activeEdit);
+	};
+
+	// handle delete method
+	const { deleteTugas, deleteError } = useDeleteTugas();
+	const handleDelete = () => {
+		deleteTugas(props.id);
+		props.onTugasDeleted();
 	};
 
 	const dateFormat = () => {
@@ -93,7 +103,9 @@ function Tugas(props: TugasProps) {
 						>
 							Edit
 						</button>
-						<button className="deletebtn">Delete</button>
+						<button className="deletebtn" onClick={handleDelete}>
+							Delete
+						</button>
 					</div>
 				</div>
 			</div>
@@ -118,8 +130,10 @@ function Tugas(props: TugasProps) {
 					date={props.date}
 					time={props.time}
 					handleBack={handleEdit}
+					onSuccess={props.onTugasEdited}
 				/>
 			)}
+			{deleteError && alert(deleteError)}
 		</>
 	);
 }
