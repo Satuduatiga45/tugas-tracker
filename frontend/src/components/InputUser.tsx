@@ -1,35 +1,102 @@
-function InputUser() {
-	const today = new Date();
-	const dd = String(today.getDate()).padStart(2, "0");
-	const mm = String(today.getMonth() + 1).padStart(2, "0"); // January is 0!
-	const yyyy = today.getFullYear();
-	const hour = today.getHours();
-	const minute = today.getMinutes();
-	const dateToday = `${yyyy}-${mm}-${dd}`;
-	const timeToday = `${hour}:${minute}`;
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useCreateTugas } from "../api/useCreateTugas";
+
+interface InputUserProps {
+	header: string;
+	id?: number;
+	title?: string;
+	description?: string;
+	date?: string;
+	time?: string;
+	handleBack(): void;
+	onSuccess(): void;
+}
+
+const today = new Date();
+const tugasFormSchema = z
+	.object({
+		title: z.string().min(1, {
+			message: "Title must not be empty.",
+		}),
+		description: z.string(),
+		date: z
+			.string()
+			.min(1, {
+				message: "Date or time must not be empty.",
+			})
+			.refine(
+				(date) => {
+					const selectedDate = new Date(date);
+					return selectedDate >= today;
+				},
+				{
+					message: `Date must be ${today.toISOString().split("T")[0].split("-").reverse().join("/")} or later.`,
+				},
+			),
+		time: z.string().min(1, {
+			message: "Date or time must not be empty.",
+		}),
+	})
+	.refine(
+		(data) => {
+			const selectedDateTime = new Date(`${data.date}T${data.time}`);
+			return selectedDateTime >= new Date();
+		},
+		{
+			message: "Time must be in the future.",
+			path: ["time"], // Menampilkan error di bawah input time
+		},
+	);
+type TugasFormSchema = z.infer<typeof tugasFormSchema>;
+
+function InputUser(props: InputUserProps) {
+	const form = useForm<TugasFormSchema>({
+		resolver: zodResolver(tugasFormSchema),
+	});
+
+	const { createTugas, error } = useCreateTugas();
+
+	const handleSubmit = () => {
+		if (props.header === "New Tugas") {
+			createTugas({
+				title: form.getValues("title"),
+				description: form.getValues("description"),
+				date: form.getValues("date"),
+				time: form.getValues("time"),
+			});
+		}
+		props.onSuccess();
+		props.handleBack();
+	};
 
 	return (
-		<div className="edit hide">
+		<>
 			<div className="background-disable"></div>
 			<div className="input-user">
-				<h1>New Tugas</h1>
-				<form>
+				<h1>{props.header}</h1>
+				<form onSubmit={form.handleSubmit(handleSubmit)} noValidate>
 					<div className="input">
 						<label htmlFor="form-title">Title</label>
 						<input
 							type="text"
 							placeholder="Title"
-							name="title"
 							id="form-title"
-							required
+							defaultValue={props.title}
+							{...form.register("title")}
 						/>
+						<span className="error">
+							{form.formState.errors.title?.message}
+						</span>
 					</div>
 					<div className="input">
 						<label htmlFor="form-description">Description</label>
 						<textarea
-							name="description"
 							id="form-description"
 							placeholder="Description"
+							defaultValue={props.description}
+							{...form.register("description")}
 						></textarea>
 					</div>
 					<div className="input">
@@ -37,23 +104,30 @@ function InputUser() {
 						<div className="datetime">
 							<input
 								type="date"
-								name="date"
 								id="form-date"
-								min={dateToday}
-								required
+								defaultValue={props.date}
+								min={today.toISOString().split("T")[0]}
+								{...form.register("date")}
 							/>
 							<input
 								type="time"
-								name="time"
 								id="form-time"
-								min={timeToday}
-								required
+								defaultValue={props.time}
+								{...form.register("time")}
 							/>
 						</div>
+						<span className="error">
+							{form.formState.errors.date?.message ||
+								form.formState.errors.time?.message}
+						</span>
 					</div>
 
 					<div className="form-button">
-						<button type="button" id="cancel">
+						<button
+							type="button"
+							id="cancel"
+							onClick={props.handleBack}
+						>
 							Cancel
 						</button>
 						<button type="submit" id="submit">
@@ -62,7 +136,8 @@ function InputUser() {
 					</div>
 				</form>
 			</div>
-		</div>
+			{error && alert(error)}
+		</>
 	);
 }
 

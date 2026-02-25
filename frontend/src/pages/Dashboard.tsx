@@ -1,18 +1,20 @@
+import { useState } from "react";
 import FilterTugas from "../components/FilterTugas";
 import Header from "../components/Header";
-import InputUser from "../components/InputUser";
 import ListTugas from "../components/ListTugas";
-// import ViewDetails from "../components/ViewDetails";
 
 function Dashboard() {
+	// state refresh data
+	const [refreshKey, setRefreshKey] = useState(0);
+	const handleRefresh = () => {
+		setRefreshKey((prev) => prev + 1);
+	};
+
 	return (
 		<div className="container">
-			<Header />
+			<Header onTugasAdded={handleRefresh} />
 			<FilterTugas />
-			<ListTugas />
-
-			{/* test */}
-			<InputUser />
+			<ListTugas refreshKey={refreshKey} />
 		</div>
 	);
 }

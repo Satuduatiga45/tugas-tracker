@@ -5,14 +5,11 @@ interface ViewDetailsProps {
 	date: string;
 	time: string;
 	status: string;
-	onAction(): void;
+	handleBack(): void;
+	statusClass(): string;
 }
 
 function ViewDetails(props: ViewDetailsProps) {
-	const handleBack = () => {
-		props.onAction();
-	};
-
 	return (
 		<>
 			<div className="background-disable"></div>
@@ -20,7 +17,12 @@ function ViewDetails(props: ViewDetailsProps) {
 				<div className="details-header">
 					<div className="details-value">
 						<h1 id="details-title">{props.title}</h1>
-						<span id="details-status">{props.status}</span>
+						<span
+							id="details-status"
+							className={props.statusClass()}
+						>
+							{props.status}
+						</span>
 					</div>
 					<p id="details-datetime">
 						Due: {props.date} | {props.time}
@@ -33,7 +35,7 @@ function ViewDetails(props: ViewDetailsProps) {
 							: "Tidak ada deskripsi."}
 					</p>
 				</div>
-				<button onClick={handleBack}>Back</button>
+				<button onClick={props.handleBack}>Back</button>
 			</div>
 		</>
 	);

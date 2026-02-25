@@ -5,8 +5,9 @@
 	flex-direction: column;
 	gap: 10px;
 	width: 75%;
+	height: 100%;
 	margin: auto;
-	justify-content: center;
+	/* justify-content: center; */
 }
 
 .background-disable {
@@ -18,7 +19,6 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
-	/* overflow: hidden; */
 }
 
 /* 404 */
@@ -38,10 +38,12 @@
 .header {
 	display: flex;
 	flex-direction: column;
+	margin-top: 25px;
 }
 
 .header h1 {
-	margin: 40px 0 15px;
+	margin: 15px 0 10px;
+	font-size: 50px;
 }
 
 .header button {
@@ -81,6 +83,9 @@
 .list-tugas {
 	display: inline-flex;
 	flex-direction: column;
+	position: relative;
+	overflow: auto;
+	margin-bottom: 25px;
 }
 
 .value {
@@ -121,6 +126,21 @@ span#status {
 	border: 0.1px solid black;
 	border-radius: 15px;
 	align-self: flex-start;
+}
+
+span#status.in-progress {
+	border-color: orange;
+	color: orange;
+}
+
+span#status.overdue {
+	border-color: red;
+	color: red;
+}
+
+span#status.completed {
+	border-color: green;
+	color: green;
 }
 
 #due {
@@ -190,6 +210,7 @@ span#status {
 .details-value {
 	display: flex;
 	justify-content: space-between;
+	gap: 10px;
 }
 
 .details-header h1 {
@@ -207,6 +228,21 @@ span#details-status {
 	white-space: nowrap;
 }
 
+span#details-status.in-progress {
+	border-color: orange;
+	color: orange;
+}
+
+span#details-status.overdue {
+	border-color: red;
+	color: red;
+}
+
+span#details-status.completed {
+	border-color: green;
+	color: green;
+}
+
 .description {
 	overflow-y: auto;
 	max-height: 50%;
@@ -222,6 +258,10 @@ span#details-status {
 }
 
 /* InputUser */
+
+.error {
+	color: red;
+}
 
 .input-user {
 	position: fixed;
