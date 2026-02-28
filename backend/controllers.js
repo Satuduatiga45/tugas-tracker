@@ -17,7 +17,7 @@ db.connect((err) => {
 
 // read
 const queryGet =
-	"SELECT id, title, description, DATE_FORMAT(date, '%Y-%m-%d') AS date, DATE_FORMAT(time, '%H:%i') AS time, is_pinned, is_completed FROM tugas_table ORDER BY is_pinned DESC, is_completed ASC, date ASC, time ASC";
+	"SELECT id, title, description, DATE_FORMAT(date, '%Y-%m-%d') AS date, DATE_FORMAT(time, '%H:%i') AS time, is_pinned as isPinned, is_completed as isCompleted FROM tugas_table ORDER BY isPinned DESC, isCompleted ASC, date ASC, time ASC";
 
 exports.getTugas = (req, res) => {
 	db.query(queryGet, (err, result, fields) => {

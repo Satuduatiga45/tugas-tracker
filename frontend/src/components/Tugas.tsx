@@ -3,6 +3,7 @@ import { useStatus } from "../hooks/useStatus";
 import ViewDetails from "./ViewDetails";
 import InputUser from "../components/InputUser";
 import { useDeleteTugas } from "../api/useDeleteTugas";
+import { useToggleIsCompleted, useToggleIsPinned } from "../api/usePatchTugas";
 
 interface TugasProps {
 	id: number;
@@ -10,9 +11,12 @@ interface TugasProps {
 	description?: string;
 	date: string;
 	time: string;
+	isPinned: boolean;
 	isCompleted: boolean;
 	onTugasEdited(): void;
 	onTugasDeleted(): void;
+	onTugasCompleted(): void;
+	onTugasPinned(): void;
 }
 
 function Tugas(props: TugasProps) {
@@ -23,9 +27,13 @@ function Tugas(props: TugasProps) {
 
 	// jika status completed, btn edit, delete, pin hilang
 	const handleHide = props.isCompleted ? "hide" : "";
+
+	// handle view details popup
 	const handleViewDetails = () => {
 		setActiveViewDetails(!activeViewDetails);
 	};
+
+	// handle edit popup
 	const handleEdit = () => {
 		setActiveEdit(!activeEdit);
 	};
@@ -35,6 +43,21 @@ function Tugas(props: TugasProps) {
 	const handleDelete = () => {
 		deleteTugas(props.id);
 		props.onTugasDeleted();
+	};
+
+	// handle completed tugas
+	const { toggleIsCompleted, toggleIsCompletedError } =
+		useToggleIsCompleted();
+	const handleToggleIsCompleted = () => {
+		toggleIsCompleted(props.id);
+		props.onTugasCompleted();
+	};
+
+	// handle pinned tugas
+	const { toggleIsPinned, toggleIsPinnedError } = useToggleIsPinned();
+	const handleToggleIsPinned = () => {
+		toggleIsPinned(props.id);
+		props.onTugasPinned();
 	};
 
 	const dateFormat = () => {
@@ -86,15 +109,24 @@ function Tugas(props: TugasProps) {
 					</div>
 				</div>
 				<div className="action">
-					<div className={`text ${handleHide}`}>
-						<span id="pin">&#9734;</span>
-						{/* &#9733; filled star  */}
+					<div
+						className={`text ${handleHide}`}
+						onClick={handleToggleIsPinned}
+					>
+						{props.isPinned ? (
+							<span id="pin">&#9733;</span>
+						) : (
+							<span id="pin">&#9734;</span>
+						)}
 					</div>
 					<div className="button">
 						<button className="details" onClick={handleViewDetails}>
 							View Details
 						</button>
-						<button className={`donebtn ${handleHide}`}>
+						<button
+							className={`donebtn ${handleHide}`}
+							onClick={handleToggleIsCompleted}
+						>
 							Done
 						</button>
 						<button
@@ -134,6 +166,8 @@ function Tugas(props: TugasProps) {
 				/>
 			)}
 			{deleteError && alert(deleteError)}
+			{toggleIsCompletedError && alert(toggleIsCompletedError)}
+			{toggleIsPinnedError && alert(toggleIsPinnedError)}
 		</>
 	);
 }
