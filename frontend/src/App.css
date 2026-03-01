@@ -1,0 +1,336 @@
+/* App*/
+
+.container {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	width: 75%;
+	height: 100%;
+	margin: auto;
+	/* justify-content: center; */
+}
+
+.background-disable {
+	background-color: #242424;
+	opacity: 80%;
+	position: fixed;
+	z-index: 0;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+/* 404 */
+.not-found {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.not-found h1 {
+	white-space: nowrap;
+}
+
+/* Header */
+
+.header {
+	display: flex;
+	flex-direction: column;
+	margin-top: 25px;
+}
+
+.header h1 {
+	margin: 15px 0 10px;
+	font-size: 50px;
+}
+
+.header button {
+	align-self: flex-end;
+	margin-right: 20px;
+}
+
+/* Filter */
+.filter-tugas {
+	display: flex;
+	border: 0.1px solid black;
+	border-radius: 8px;
+	padding: 20px;
+	gap: 20px;
+}
+
+.filter {
+	padding: 20px;
+	width: 100%;
+	border: 0.1px solid black;
+	border-radius: 8px;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+}
+
+.filter #count {
+	font-size: 30px;
+}
+
+.filter.active {
+	border-color: #646cff;
+}
+
+/* Tugas */
+
+.list-tugas {
+	display: inline-flex;
+	flex-direction: column;
+	position: relative;
+	overflow: auto;
+	margin-bottom: 25px;
+}
+
+.value {
+	display: flex;
+	flex-direction: row;
+	width: 50%;
+}
+
+.action {
+	display: flex;
+	flex-direction: row;
+	width: 50%;
+	justify-content: end;
+}
+
+.tugas {
+	border: 0.1px solid black;
+	border-radius: 8px;
+	text-align: left;
+	margin: 0 0 10px;
+	display: flex;
+	padding: 5px 15px;
+}
+
+.text {
+	margin: auto 10px;
+}
+
+#tugas {
+	display: flex;
+	flex-direction: column;
+	font-size: 22px;
+	margin-left: 15px;
+}
+
+span#status {
+	font-size: 10px;
+	margin: 7px 0 3px;
+	padding: 3px 10px;
+	border: 0.1px solid black;
+	border-radius: 15px;
+	align-self: flex-start;
+}
+
+span#status.in-progress {
+	border-color: orange;
+	color: orange;
+}
+
+span#status.overdue {
+	border-color: red;
+	color: red;
+}
+
+span#status.completed {
+	border-color: green;
+	color: green;
+}
+
+#due {
+	margin: 3px 0;
+	border: 1px solid black;
+	border-radius: 8px;
+	display: flex;
+	flex-direction: column;
+	text-align: start;
+	padding: 3px 10px;
+	vertical-align: center;
+	min-width: 25%;
+}
+
+#date {
+	font-size: 12px;
+	margin: auto auto 0;
+}
+#time {
+	margin: 0 auto auto;
+}
+
+#pin {
+	font-size: 30px;
+	cursor: pointer;
+}
+
+.button {
+	display: flex;
+	flex-direction: row;
+}
+
+.button button {
+	text-align: center;
+	display: inline;
+	padding: 12px;
+	width: 100%;
+	margin: auto 3px;
+	white-space: nowrap;
+}
+
+.hide {
+	display: none !important;
+}
+
+/* Details */
+.view-details {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: #242424;
+	width: 75vh;
+	border: 1px solid black;
+	border-radius: 8px;
+	padding: 30px;
+	text-align: left;
+	z-index: 10;
+	max-height: 50vh;
+	display: flex;
+	flex-direction: column;
+}
+
+.details-datetime p {
+	font-size: 15px;
+}
+
+.details-value {
+	display: flex;
+	justify-content: space-between;
+	gap: 10px;
+}
+
+.details-header h1 {
+	margin: 0;
+	font-size: 40px;
+}
+
+span#details-status {
+	font-size: 15px;
+	margin: auto 0;
+	padding: 3px 10px;
+	border: 0.1px solid black;
+	border-radius: 15px;
+	align-self: flex-start;
+	white-space: nowrap;
+}
+
+span#details-status.in-progress {
+	border-color: orange;
+	color: orange;
+}
+
+span#details-status.overdue {
+	border-color: red;
+	color: red;
+}
+
+span#details-status.completed {
+	border-color: green;
+	color: green;
+}
+
+.description {
+	overflow-y: auto;
+	max-height: 50%;
+}
+
+.description p {
+	margin: 0 15px 0 0;
+	font-size: 12px;
+}
+
+.view-details button {
+	margin-top: 25px;
+}
+
+/* InputUser */
+
+.error {
+	color: red;
+}
+
+.input-user {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: #242424;
+	width: 75vh;
+	border: 1px solid black;
+	border-radius: 8px;
+	padding: 30px;
+	text-align: left;
+	z-index: 999;
+	display: flex;
+	flex-direction: column;
+}
+
+.input-user form {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}
+
+.input-user h1 {
+	text-align: center;
+	font-size: 40px;
+	margin: 20px;
+}
+
+.input-user .input {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+input,
+textarea {
+	font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+	font-size: 15px;
+	border: 1px solid black;
+	border-radius: 8px;
+	padding: 8px;
+}
+
+textarea {
+	resize: none;
+	height: 100px;
+}
+
+.datetime {
+	display: flex;
+	flex-direction: row;
+	gap: 10px;
+}
+
+.datetime input {
+	width: 100%;
+}
+
+.input-user .form-button {
+	display: flex;
+	flex-direction: row;
+	gap: 10px;
+	margin-top: 10px;
+}
+
+.form-button button {
+	width: 100%;
+}
