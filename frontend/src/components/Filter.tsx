@@ -1,6 +1,6 @@
 interface FilterProps {
 	label: string;
-	count: number;
+	count: string;
 	active: boolean;
 	handler(): void;
 }

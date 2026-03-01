@@ -1,6 +1,7 @@
 import Tugas from "./Tugas";
 import { useGetTugas } from "../api/useGetTugas";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router";
 
 interface ListTugasProps {
 	refreshKey: number;
@@ -8,6 +9,9 @@ interface ListTugasProps {
 
 function ListTugas(props: ListTugasProps) {
 	const { data, getTugas, loading, error } = useGetTugas();
+	const [filterParams] = useSearchParams();
+
+	// filter data
 
 	// data refresh ketika ada edit tugas
 	const [refreshAfterEdit, setRefreshAfterEdit] = useState(0);
@@ -34,13 +38,14 @@ function ListTugas(props: ListTugasProps) {
 	};
 
 	useEffect(() => {
-		getTugas();
+		getTugas(filterParams.get("filter") || "all");
 	}, [
 		props.refreshKey,
 		refreshAfterEdit,
 		refreshAfterDelete,
 		refreshStatePinned,
 		refreshStateCompleted,
+		filterParams,
 	]);
 
 	return (
